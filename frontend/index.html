@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Clima de Murcia</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="module">
+    import { pantallaComponent } from './pantalla.html.js'; 
+
+    const { createApp } = Vue;
+
+    createApp(pantallaComponent).mount('#app');
+  </script>
+</body>
+</html>
