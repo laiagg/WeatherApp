@@ -1,7 +1,7 @@
-export const pantallaComponent = {
+export const pantalla = {
   template: `
     <div>
-      <h1>Clima</h1>
+      <h1>Clima en {{ selectedCity.name }}</h1>
 
       <select v-model="selectedCity">
         <option v-for="city in cities" :value="city">{{ city.name }}</option>
@@ -31,7 +31,7 @@ export const pantallaComponent = {
         this.error = null;
         const { lat, lon } = this.selectedCity;
 
-        const resp = await fetch('http://localhost:3000/weather', {
+        const resp = await fetch('http://localhost:3001/weather', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ lat, lon })

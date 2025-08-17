@@ -7,8 +7,9 @@ dotenv.config();
 const OPENWEATHER_KEY = process.env.OPENWEATHER_KEY;
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.use(cors());
+app.use(express.json());
 
 async function getWeather(body) {
   const { lat, lon } = body;
@@ -23,7 +24,7 @@ async function getWeather(body) {
     const resp = await fetch(url.toString());
     if (!resp.ok) {
       const txt = await resp.text();
-      throw new Error(`Error OpenWeather: ${txt}`);
+      throw new Error(`Error en OpenWeather: ${txt}`);
     }
     return await resp.json();
   } catch (err) {
@@ -32,15 +33,17 @@ async function getWeather(body) {
   }
 }
 
-app.get('/weather', async (req, res) => {
+app.post('/weather', async (req, res) => {
   try {
-    const data = await getWeather();
+    const { lat, lon } = req.body;   
+    const data = await getWeather({ lat, lon }); 
     res.json(data);
-    const { lat, lon } = req.body;
-  } catch {
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Error al obtener el clima' });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);

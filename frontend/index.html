@@ -2,18 +2,18 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Clima de Murcia</title>
+  <title>WeatherApp</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
   <div id="app"></div>
 
   <script type="module">
-    import { pantallaComponent } from './pantalla.html.js'; 
+    import { pantalla } from './pantalla.html.js'; 
 
     const { createApp } = Vue;
 
-    createApp(pantallaComponent).mount('#app');
+    createApp(pantalla).mount('#app');
   </script>
 </body>
 </html>
