@@ -1,5 +1,5 @@
 const express = require('express');
-const cors = require('cors'); // <--- importa cors
+const cors = require('cors');
 const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 
@@ -8,15 +8,10 @@ const OPENWEATHER_KEY = process.env.OPENWEATHER_KEY;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Permitir todas las solicitudes CORS (solo para desarrollo)
 app.use(cors());
 
-// Coordenadas de Murcia
-const lat = 37.9922;
-const lon = -1.1307;
-
-async function getWeather() {
+async function getWeather(body) {
+  const { lat, lon } = body;
   try {
     const url = new URL('https://api.openweathermap.org/data/2.5/weather');
     url.searchParams.set('lat', lat);
@@ -37,10 +32,11 @@ async function getWeather() {
   }
 }
 
-app.get('/api/weather', async (req, res) => {
+app.get('/weather', async (req, res) => {
   try {
     const data = await getWeather();
     res.json(data);
+    const { lat, lon } = req.body;
   } catch {
     res.status(500).json({ error: 'Error al obtener el clima' });
   }
